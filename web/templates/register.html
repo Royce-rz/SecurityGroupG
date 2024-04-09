@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="row">
+        <a  href="/">Home</a>
+        {% if user_logged_in %}
+            <a  href="/logout">Logout</a>
+            <a  href="/data">Users Data</a>
+        {% else %}
+            <a  href="/login">Login</a>
+            <a  href="/register">Register</a>
+        {% endif %}
+    </div>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    <h1>Register a new account</h1>
+    <form method="POST">
+        <label class="beforeInput" for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br>
+        <br>
+        <label class="beforeInput" for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <input type="submit" value="register">
+    </form>
+    </div>
+</body>
+</html>

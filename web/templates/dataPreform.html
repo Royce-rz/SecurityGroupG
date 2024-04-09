@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users List</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="row">
+        <a  href="/">Home</a>
+        {% if user_logged_in %}
+            <a  href="/logout">Logout</a>
+            <a  href="/data">Users Data</a>
+        {% else %}
+            <a  href="/login">Login</a>
+            <a  href="/register">Register</a>
+        {% endif %}
+    </div>
+    <div>
+        <form action="/search" method="post">
+            <label>Search</label>
+            <input type="text" id="user_name" name="user_name" value="Enter username">
+            <input type="submit" value="Submit">
+        </form>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </div>
+    
+    <table>
+        <tr>
+            <th colspan="3">Users List</th>
+        </tr>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Password</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+                <td>{{ user['id'] }}</td>
+                <td>{{ user['username'] }}</td>
+                <td>{{ user['password'] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+</body>
+</html>

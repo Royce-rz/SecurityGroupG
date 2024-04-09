@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Return Page</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body onload="startTimer()">
+  <!-- <h1 style="text-align: center;">Delete Page</h1> -->
+  <p style="text-align: center;">{{ info }}</p>
+  <p style="text-align: center;">You will be redirected to home page in <span id="return">3</span> seconds.</p>
+
+  <script>
+    function startTimer() {
+      var count = 3;
+      var deleteElement = document.getElementById("return");
+      var deleteInterval = setInterval(function() {
+        count--;
+        deleteElement.innerText = count;
+        if (count == 0) {
+          clearInterval(deleteInterval);
+          window.location.href = "/";
+        }
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
