@@ -16,25 +16,61 @@
             <a  href="/register">Register</a>
         {% endif %}
     </div>
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <ul class="flashes">
-                {% for message in messages %}
-                <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
     <h1>Register a new account</h1>
-    <form method="POST">
+    <form id="form" method="POST" autocomplete="on">
         <label class="beforeInput" for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br>
+        <input type="text" id="username" name="username" required>
+        <br>
+        <label class="beforeInput" for="email">Email:</label>
+        <input type="text" id="email" name="email" required>
         <br>
         <label class="beforeInput" for="password">Password:</label>
         <input type="password" id="password" name="password" required>
         <br>
+        <label class="beforeInput" for="ill">The illnees you have:</label>
+        <select name="ill" id="ill">
+            <option value="disable">disable</option>
+            <option value="fever">fever</option>
+            <option value="diabetes">diabetes</option>
+        </select>
+        <br>
+        <label class="beforeInput" for="verify_code">Verify Code:</label>
+        <input type="text" id="verify_code" name="verify_code">
+        <input type="submit" value="Send">
+        <br>
         <input type="submit" value="register">
     </form>
     </div>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <ul class="flashes">
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endwith %}
 </body>
+<script>
+    document.getElementById('form').onsubmit = function(e) {
+        localStorage.setItem('username', document.getElementById('username').value);
+        localStorage.setItem('email', document.getElementById('email').value);
+        localStorage.setItem('password', document.getElementById('password').value);
+        localStorage.setItem('ill', document.getElementById('ill').value);
+    };
+    window.onload = function() {
+        if (localStorage.getItem('username')) {
+            document.getElementById('username').value = localStorage.getItem('username');
+        }
+        if (localStorage.getItem('email')) {
+            document.getElementById('email').value = localStorage.getItem('email');
+        }
+        if (localStorage.getItem('password')) {
+            document.getElementById('password').value = localStorage.getItem('password');
+        }
+        if (localStorage.getItem('ill')) {
+            document.getElementById('ill').value = localStorage.getItem('ill');
+        }
+    };
+    </script>
 </html>

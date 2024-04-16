@@ -42,7 +42,7 @@ li{
     font-family: Arial, sans-serif;
 }
 
-input[type="text"],input[type="password"], input[type="submit"]{
+input[type="text"],input[type="password"], input[type="submit"], button, select, option{
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -56,12 +56,12 @@ label{
     font-family: Arial, sans-serif;
 }
 
-label[class="beforeInput"]{
+label[class="beforeInput"], button{
     border: 1px solid #ccc;
     border-radius: 5px;
 }
 
-input[type="submit"] {
+input[type="submit"], button{
     background-color: #fff;
     color: #333;
     cursor: pointer;

@@ -15,6 +15,21 @@
                 <a  href="/register">Register</a>
             {% endif %}
         </div>
+        <h1>Login</h1>
+        <form id="form" method="post" action="{{ url_for('login') }}">
+            <label class="beforeInput" for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <br>
+            <label class="beforeInput" for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <br>
+            <label class="beforeInput" for="captcha">Captcha:</label>
+            <input type="text" id="captcha" name="captcha">
+            <br>
+            <img id="captcha_image" src="{{ url_for('captcha')}}" alt="captcha">
+            <br>
+            <input id="login" type="submit" value="Login">
+        </form>
         {% with messages = get_flashed_messages() %}
             {% if messages %}
                 <ul class="flashes">
@@ -24,15 +39,22 @@
                 </ul>
             {% endif %}
         {% endwith %}
-        <h1>Login</h1>
-        <form method="post" action="{{ url_for('login') }}">
-            <label class="beforeInput" for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
-            <br>
-            <label class="beforeInput" for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-            <br>
-            <input id="login" type="submit" value="Login">
-        </form>
     </body>
+    <script>
+        document.getElementById('captcha_image').onclick = function() {
+            document.getElementById('captcha_image').src = "{{ url_for('captcha')}}" + "?" + new Date().getTime();
+        };
+        document.getElementById('form').onsubmit = function(e) {
+            localStorage.setItem('username', document.getElementById('username').value);
+            localStorage.setItem('password', document.getElementById('password').value);
+        };
+        window.onload = function() {
+            if (localStorage.getItem('username')) {
+                document.getElementById('username').value = localStorage.getItem('username');
+            }
+            if (localStorage.getItem('password')) {
+                document.getElementById('password').value = localStorage.getItem('password');
+            }
+        };
+    </script>
 </html>

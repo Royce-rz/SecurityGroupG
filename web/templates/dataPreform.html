@@ -35,18 +35,22 @@
     
     <table>
         <tr>
-            <th colspan="3">Users List</th>
+            <th colspan="5">Users List</th>
         </tr>
         <tr>
             <th>ID</th>
             <th>Username</th>
             <th>Password</th>
+            <th>Email</th>
+            <th>Illness</th>
         </tr>
         {% for user in users %}
         <tr>
-                <td>{{ user['id'] }}</td>
-                <td>{{ user['username'] }}</td>
-                <td>{{ user['password'] }}</td>
+                <td>{{ user['Id'] }}</td>
+                <td>{{ user['Username'] }}</td>
+                <td>{{ user['Password'] }}</td>
+                <td>{{ user['Email'] }}</td>
+                <td>{{ user['Illness'] }}</td>
         </tr>
         {% endfor %}
     </table>
