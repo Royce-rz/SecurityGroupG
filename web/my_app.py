@@ -4,6 +4,7 @@ import pymssql
 import hashlib
 import random, string, base64, os
 from captcha.image import ImageCaptcha
+import socket
     
 app = Flask(__name__)
 
@@ -41,6 +42,11 @@ def createUser(username,password,email,verifyCode,illness):
     #sql = 'update students set name=%s where id=%s'
     #sql = 'delete from students where id<%s'
     cursor.execute(sql)
+    db.commit()
+
+def updateIPUser(username, ip):
+    sql = 'UPDATE users SET Ip=%s WHERE Username=%s'
+    cursor.execute(sql, (ip, username))
     db.commit()
 
 def deleteUser(key, value):
@@ -99,7 +105,7 @@ def index():
         flash('Welcome, user:' + session['username'])
     else:
         flash("Welcome, you haven't login")
-    return render_template('home.html', user_logged_in=user_logged_in())    
+    return render_template('home.html', user_logged_in=user_logged_in()), 302    
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -107,16 +113,23 @@ def login():
         username = request.form['username']
         password = request.form['password']
         captcha = request.form['captcha']
+        hostname = socket.gethostname()
+        ip_address = socket.gethostbyname(hostname)
+        # ip_address = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)  # Capture IP address
+
         password = encode_password(password)
-        if session['captcha'].lower() == captcha.lower():
-            if len(loginUser(username, password)) > 0:
+        if session.get('captcha', '').lower() == captcha.lower():
+            user = loginUser(username, password)
+            if len(user) > 0:
                 session['username'] = username
-                flash('successfully login!')
+                updateIPUser(username, ip_address)  # Update IP address in database
+                flash('Successfully logged in!')
                 return redirect('/')
             else:
                 flash('Username or password incorrect!')
         else:
-            flash('captcha incorrect!')
+            flash('Captcha incorrect!')
+
     return render_template('login.html', user_logged_in=user_logged_in())
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -135,6 +148,7 @@ def register():
             flash('Username existing')
         elif verifyCode == "":
             send_code(email)
+            flash('The verify code has been sent')
         elif session['code'] == verifyCode:
             createUser(username,password,email,verifyCode, illness)
             flash('Successfully registered!')
@@ -175,10 +189,10 @@ def search():
         flash("Username is not existed")
         return redirect('/data')
     else:
-        sql = 'select * from users where username=%s'
-        cursor.execute(sql, (user_name))
+        sql = 'select * from users where username=' + user_name
+        cursor.execute(sql)
         users = cursor.fetchall()
-        return redirect('/data/' + str(users[0]['id']))
+        return redirect('/data/' + str(users[0]['Id']))
     
 @app.get("/captcha")
 def captcha():
