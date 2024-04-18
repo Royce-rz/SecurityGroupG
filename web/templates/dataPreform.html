@@ -19,7 +19,7 @@
     <div>
         <form action="/search" method="post">
             <label>Search</label>
-            <input type="text" id="user_name" name="user_name" value="Enter username">
+            <input id="search_input" type="text" id="user_name" name="user_name">
             <input type="submit" value="Submit">
         </form>
         {% with messages = get_flashed_messages() %}
