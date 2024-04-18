@@ -197,7 +197,7 @@ def user_id(user_id):
 def search():
     user_name = request.form['user_name']
     if parametrize_string(user_name):
-        if 0: #len(detectUser('username', user_name)) == 0:
+        if len(detectUser('username', user_name)) == 0:
             flash("Username is not existed")
             return redirect('/data')
         else:
