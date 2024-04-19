@@ -15,3 +15,5 @@ In this project, we used a self-signed certificate, so we need to generate a sep
 Run *`arduino.ino`* and *`security_cw_localhost.py`* can simulate the unencrypted process through HTTP transmission. 
 Run *`arduino_encrption.ino`* and *`security_cw_localhost_encrp.py`* can simulate the encryption process. 
 The data output could be found in the CSV file. 
+## Group presentation vedio link: 
+On YouTube：https://www.youtube.com/watch?v=1L2QP4h4AI0
