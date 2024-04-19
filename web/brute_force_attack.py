@@ -25,7 +25,6 @@ def main():
             else:
                 valid = True
 
-        #password = '1234'
         generate_captcha = random.choices(characters, k=4)
         captcha = "".join(generate_captcha)
         r = attempt_login(username, password, captcha)
