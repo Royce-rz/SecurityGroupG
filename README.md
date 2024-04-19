@@ -8,5 +8,5 @@ The main web app is **`web/my_app.py`**, this file include all of the system bui
 You get the username and password by running **`web/brute_force_attack`**.py.
 ### SQL injection
 After you login with the username and password got by brute force attack, you can do SQL injection in User Data page.
-In the search box, enter **` 1'; delete from users where username='Test `** or **` 1'; update users set Illness='healthy' where username='Test `**
+In the search box, enter **` 1'; delete from users where username='Test `** to delete user with unauthorzied SQL command or **` 1'; update users set Illness='healthy' where username='Test `** to change user's data.
 
