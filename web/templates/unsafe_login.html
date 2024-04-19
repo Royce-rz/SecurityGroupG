@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Login</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <div class="row">
+            <a  href="/">Home</a>
+            {% if user_logged_in %}
+                <a  href="/logout">Logout</a>
+                <a  href="/data">Users Data</a>
+            {% else %}
+                <a  href="/login">Login</a>
+                <a  href="/register">Register</a>
+            {% endif %}
+        </div>
+        <h1>Login</h1>
+        <form id="form" method="post" action="{{ url_for('login') }}">
+            <label class="beforeInput" for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <br>
+            <label class="beforeInput" for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <br>
+            <label class="beforeInput" for="captcha">Captcha:</label>
+            <input type="text" id="captcha" name="captcha">
+            <br>
+            <input id="login" type="submit" value="Login">
+        </form>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </body>
+    <script>
+        document.getElementById('form').onsubmit = function(e) {
+            localStorage.setItem('username', document.getElementById('username').value);
+            localStorage.setItem('password', document.getElementById('password').value);
+        };
+        window.onload = function() {
+            if (localStorage.getItem('username')) {
+                document.getElementById('username').value = localStorage.getItem('username');
+            }
+            if (localStorage.getItem('password')) {
+                document.getElementById('password').value = localStorage.getItem('password');
+            }
+        };
+    </script>
+</html>
