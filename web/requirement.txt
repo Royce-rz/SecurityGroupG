@@ -1,0 +1,13 @@
+flask
+flask-mail
+pymmsql
+hashlib
+random
+string
+base64
+os
+re
+captcha
+sochet
+itertools
+threading
