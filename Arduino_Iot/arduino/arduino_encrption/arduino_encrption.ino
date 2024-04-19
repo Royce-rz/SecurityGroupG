@@ -6,12 +6,12 @@
 #include <Wire.h>
 #include <ICM_20948.h>
 
-const char ssid[] = "TALKTALKE5A7F3"; // WiFi/Hotspot name
-const char pass[] = "E83CHHMT"; // WiFi/Hotspot password
+const char ssid[] = "yourwifi_name"; // WiFi/Hotspot name
+const char pass[] = "yourwifi_password"; // WiFi/Hotspot password
 
 const String deviceId = "IoT_devices_data"; // name the ID of this IoT device
 
-const char serverAddress[] = "192.168.1.196"; // Flask address
+const char serverAddress[] = "yourIP_address"; // Flask address
 int serverPort = 80; // Flask port
 
 ICM_20948_I2C icm; 
